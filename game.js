@@ -7,9 +7,12 @@ var userClickedPattern = [];
 var started = false;
 var level = 0;
 
+var max = 0;
+
 $(document).keypress(function() {
   if (!started) {
     $("#level-title").text("Level " + level);
+    $("#max").text("Max level you reach: " + max);
     nextSequence();
     started = true;
   }
@@ -35,15 +38,20 @@ function checkAnswer(currentLevel) {
         }, 1000);
       }
     } else {
+      if (max < level){
+        max = level;
+      }
+      
       playSound("wrong");
       $("body").addClass("game-over");
       $("#level-title").text("Game Over, Press Any Key to Restart");
-
+      
       setTimeout(function () {
         $("body").removeClass("game-over");
       }, 200);
 
       startOver();
+      
     }
 }
 
